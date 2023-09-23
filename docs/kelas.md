@@ -128,7 +128,7 @@ Response Body Error
 }
 ```
 
-## GET kelas By name
+## GET kelas all
 
 Endpoint : GET /api/v1/kelas?kelas=XII&page=1&perPage=10&sort=asc
 
@@ -153,7 +153,13 @@ Response Body Success
       "kelas": "Kelas XII B",
       "nomor_ruangan": 1
     }
-  ]
+  ],
+  "page": {
+    "perPage": 10,
+    "total": 50,
+    "totalPage": 5,
+    "current": 2
+  }
 }
 ```
 

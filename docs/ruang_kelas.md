@@ -17,7 +17,7 @@ Request Body
 
 ```json
 {
-  "nomor": 1,
+  "nomor_ruangan": 1,
   "kapasitas": 30,
   "tersedia": true
 }
@@ -56,7 +56,7 @@ Request Body
 
 ```json
 {
-  "nomor": 1,
+  "nomor_ruangan": 1,
   "kapasitas": 30,
   "tersedia": true
 }
@@ -118,7 +118,7 @@ Response Body Success
 {
   "message": "SUCCESS",
   "data": {
-    "nomor": 1,
+    "nomor_ruangan": 1,
     "kapasitas": 30,
     "tersedia": true
   }
@@ -142,6 +142,10 @@ Header :
     - Authorization : token
     - role : ADMIN
 
+Request params
+
+- kapasitas : optional int
+
 Response Body Success
 
 ```json
@@ -149,48 +153,23 @@ Response Body Success
   "message": "SUCCESS",
   "data": [
     {
-      "id_kelas": 1,
-      "nama": 1,
+      "id_ruang_kelas": 1,
+      "nomor_ruangan": 1,
       "kapasitas": 30,
       "tersedia": true
     },
     {
-      "id_kelas": 2,
-      "nama": 1,
+      "id_ruang_kelas": 2,
+      "nomor_ruangan": 2,
       "kapasitas": 30,
       "tersedia": true
     }
-  ]
-}
-```
-
-Response Body Error
-
-```json
-{
-  "errors": ["Ruang kelas tidak ditemukan"]
-}
-```
-
-## GET ruang kelas By nomor
-
-Endpoint : GET /api/v1/ruang-kelas?nomor=1
-
-Header :
-
-    - Authorization : token
-    - role : ADMIN
-
-Response Body Success
-
-```json
-{
-  "message": "SUCCESS",
-  "data": {
-    "id_kelas": 1,
-    "nama": 1,
-    "kapasitas": 30,
-    "tersedia": true
+  ],
+  "page": {
+    "perPage": 10,
+    "total": 50,
+    "totalPage": 5,
+    "current": 2
   }
 }
 ```

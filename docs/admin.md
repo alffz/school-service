@@ -128,7 +128,13 @@ Response Body Success
       "username": "alex",
       "email": "alex@gmail.com"
     }
-  ]
+  ],
+  "page": {
+    "perPage": 10,
+    "total": 50,
+    "totalPage": 5,
+    "current": 2
+  }
 }
 ```
 
