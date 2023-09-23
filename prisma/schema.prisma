@@ -18,10 +18,10 @@ model Admin {
 }
 
 model Ruang_kelas {
-  id_ruang_kelas Int     @id @default(autoincrement()) // @id is primary key
+  id_ruang_kelas Int      @id @default(autoincrement()) // @id is primary key
   nomor_ruangan  Int
   kapasitas      Int
-  tersedia       Boolean
+  tersedia       Boolean?
   Kelas          Kelas[]
 
   @@unique([nomor_ruangan])
