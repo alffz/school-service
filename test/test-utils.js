@@ -48,6 +48,35 @@ export const getTestUser = async () => {
   });
 };
 
+export const createTestRuangKelas = async ({
+  nomor_ruangan,
+  kapasitas,
+  tersedia,
+}) => {
+  return prismaClient.ruang_kelas.create({
+    data: {
+      nomor_ruangan,
+      kapasitas,
+      tersedia,
+    },
+  });
+};
+export const deleteTestRuangKelas = async (nomor) => {
+  return prismaClient.ruang_kelas.delete({
+    where: {
+      nomor_ruangan: nomor,
+    },
+  });
+};
+
+export const getTestRuangKelas = async () => {
+  return prismaClient.ruang_kelas.findFirst({
+    where: {
+      nomor_ruangan: 1,
+    },
+  });
+};
+
 export const removeUser = async (user) => {
   return prismaClient.$executeRaw`delete from admin`;
 };

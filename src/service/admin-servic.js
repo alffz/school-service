@@ -95,14 +95,25 @@ const remove = async (id) => {
 
 const get = async ({ page, perPage }) => {
   page = validate(idSchema, page);
-  perPage = validate(idSchema, page);
+  perPage = validate(idSchema, perPage);
 
-  const result = await prismaClient.admin.findMany({
-    // take: page,
-    // skip: 0,
+  const skip = (page - 1) * perPage; // 1-1 * 20 = 0 , 2-1 * 20 = 20, 3-1 * 20 = 40
+  // limit jumlah data yang mau di ambil / take
+  // offset index data ke / skip
+  const data = await prismaClient.admin.findMany({
+    take: perPage,
+    skip: skip,
   });
-  console.log(result);
-  return result;
+  const totalData = await prismaClient.admin.count();
+  return {
+    data,
+    page: {
+      size: perPage,
+      total: totalData,
+      totalPage: Math.ceil(totalData / perPage),
+      current: page,
+    },
+  };
 };
 
 export default { create, update, remove, get };
