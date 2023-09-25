@@ -77,6 +77,23 @@ export const getTestRuangKelas = async () => {
   });
 };
 
+export const deleteAllTestKelas = async (nomor_ruangan) => {
+  return prismaClient.$queryRaw`delete from kelas`;
+};
+
+export const createTestKelas = async ({ nomor_ruang_kelas, kelas }) => {
+  return prismaClient.kelas.create({
+    data: { nomor_ruang_kelas, kelas },
+  });
+};
+
+export const getTestKelas = async (kelas) => {
+  return prismaClient.kelas.findFirst({
+    where: {
+      kelas: kelas,
+    },
+  });
+};
 export const removeUser = async (user) => {
   return prismaClient.$executeRaw`delete from admin`;
 };

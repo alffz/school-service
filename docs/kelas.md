@@ -16,7 +16,7 @@ Request Body
 
 ```json
 {
-  "nomor_ruangan": 1,
+  "nomor_ruang_kelas": 1,
   "kelas": "X A"
 }
 ```
@@ -53,7 +53,7 @@ Request Body
 
 ```json
 {
-  "nomor_ruangan": 1,
+  "nomor_ruang_kelas": 1,
   "kelas": "X A"
 }
 ```
@@ -130,12 +130,19 @@ Response Body Error
 
 ## GET kelas all
 
-Endpoint : GET /api/v1/kelas?kelas=XII&page=1&perPage=10&sort=asc
+Endpoint : GET /api/v1/kelas?kelas=XII&page=1&perPage=10
 
 Header :
 
     - Authorization : token
     - role : ADMIN
+
+Request params
+
+- kelas optional
+- page default 1
+- perPage default 20
+- sort default asc
 
 Response Body Success
 
@@ -146,12 +153,12 @@ Response Body Success
     {
       "id": 1,
       "kelas": "Kelas XII A",
-      "nomor_ruangan": 1
+      "nomor_ruang_kelas": 1
     },
     {
       "id": 2,
       "kelas": "Kelas XII B",
-      "nomor_ruangan": 1
+      "nomor_ruang_kelas": 1
     }
   ],
   "page": {
