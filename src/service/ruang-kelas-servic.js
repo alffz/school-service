@@ -1,9 +1,5 @@
 import validate from "../validation/validaton.js";
 import ResponseError from "../error/response-error.js";
-import {
-  createAdminSchema,
-  idSchemas,
-} from "../validation/admin-validation.js";
 import { prismaClient } from "../app/database.js";
 import {
   createRuangKelasSchema,

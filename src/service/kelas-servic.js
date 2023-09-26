@@ -2,15 +2,9 @@ import validate from "../validation/validaton.js";
 import ResponseError from "../error/response-error.js";
 import { prismaClient } from "../app/database.js";
 import {
-  createRuangKelasSchema,
-  idSchemas,
-  sortSchemas,
-} from "../validation/ruang-kelas-validation.js";
-import {
   createKelasSchema,
   idSchema,
   kelasSchema,
-  sortSchema,
 } from "../validation/kelas-validation.js";
 
 const create = async (request) => {
