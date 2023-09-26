@@ -18,18 +18,18 @@ model Admin {
 }
 
 model Ruang_kelas {
-  id_ruang_kelas Int      @id @default(autoincrement()) // @id is primary key
-  nomor_ruangan  Int
-  kapasitas      Int
-  tersedia       Boolean?
-  Kelas          Kelas[]
+  id            Int      @id @default(autoincrement()) // @id is primary key
+  nomor_ruangan Int
+  kapasitas     Int
+  tersedia      Boolean?
+  Kelas         Kelas[]
 
   @@unique([nomor_ruangan])
   @@map("ruang_kelas")
 }
 
 model Kelas {
-  id_kelas          Int    @id @default(autoincrement())
+  id                Int    @id @default(autoincrement())
   nomor_ruang_kelas Int
   kelas             String @db.VarChar(30)
 
@@ -42,32 +42,32 @@ model Kelas {
 }
 
 model Guru {
-  id_guru  Int    @id @default(autoincrement()) // @id is primary key
+  id       Int    @id @default(autoincrement()) // @id is primary key
   username String @db.VarChar(50)
   email    String @unique @db.VarChar(50)
   password String @db.VarChar(100)
   id_kelas Int?
 
-  kelas  Kelas?   @relation(fields: [id_kelas], references: [id_kelas])
+  kelas  Kelas?   @relation(fields: [id_kelas], references: [id])
   Jadwal Jadwal[]
 }
 
 model Pelajaran {
-  id_pelajara Int      @id @default(autoincrement()) // @id is primary key
-  pelajaran   String   @db.VarChar(50)
-  Jadwal      Jadwal[]
+  id        Int      @id @default(autoincrement()) // @id is primary key
+  pelajaran String   @db.VarChar(50)
+  Jadwal    Jadwal[]
 
   @@map("pelajaran")
 }
 
 model Murid {
-  id_murid Int    @id @default(autoincrement()) // @id is primary key
+  id       Int    @id @default(autoincrement()) // @id is primary key
   username String @db.VarChar(50)
   email    String @unique @db.VarChar(50)
   password String @db.VarChar(100)
   id_kelas Int?
 
-  kelas           Kelas?            @relation(fields: [id_kelas], references: [id_kelas])
+  kelas           Kelas?            @relation(fields: [id_kelas], references: [id])
   Kehadiran_murid Kehadiran_murid[]
 
   @@map("murid")
@@ -83,9 +83,9 @@ model Jadwal {
   berakhir     Json // {hour:24,minute:59}
   status       Boolean @default(false) // false sedang berlangsung
 
-  pelajaran Pelajaran @relation(fields: [id_pelajaran], references: [id_pelajara])
-  guru      Guru      @relation(fields: [id_guru], references: [id_guru])
-  kelas     Kelas     @relation(fields: [id_kelas], references: [id_kelas])
+  pelajaran Pelajaran @relation(fields: [id_pelajaran], references: [id])
+  guru      Guru      @relation(fields: [id_guru], references: [id])
+  kelas     Kelas     @relation(fields: [id_kelas], references: [id])
 
   Kehadiran_murid Kehadiran_murid[]
   Kehadiran_guru  Kehadiran_guru[]
@@ -99,7 +99,7 @@ model Kehadiran_murid {
   keterangan Keterangan
 
   jadwal Jadwal @relation(fields: [id_jadwal], references: [id])
-  murid  Murid  @relation(fields: [id_murid], references: [id_murid])
+  murid  Murid  @relation(fields: [id_murid], references: [id])
 }
 
 model Kehadiran_guru {
