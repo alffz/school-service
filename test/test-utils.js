@@ -21,6 +21,22 @@ export const createUser = async ({ username, email, password, role }) => {
   });
 };
 
+export const createTestGuru = async ({
+  username,
+  email,
+  password,
+  id_kelas,
+}) => {
+  return prismaClient.guru.create({
+    data: {
+      username,
+      email,
+      password,
+      id_kelas: id_kelas,
+    },
+  });
+};
+
 export const deleteUser = async ({ email, role }) => {
   const roles = {
     admin: prismaClient.admin,
@@ -37,10 +53,18 @@ export const deleteUser = async ({ email, role }) => {
   });
 };
 
-export const getTestUser = async () => {
-  return prismaClient.admin.findFirst({
+export const getTestUser = async ({ email, role }) => {
+  const roles = {
+    admin: prismaClient.admin,
+    guru: prismaClient.guru,
+    murid: prismaClient.murid,
+  };
+
+  const userRole = roles[role];
+
+  return userRole.findFirst({
     where: {
-      email: "admin@gmail.com",
+      email: email,
     },
     select: {
       id: true,
@@ -96,6 +120,23 @@ export const getTestKelas = async (kelas) => {
 };
 export const removeUser = async (user) => {
   return prismaClient.$executeRaw`delete from admin`;
+};
+
+export const createTestPelajaran = async (pelajaran) => {
+  return await prismaClient.pelajaran.create({
+    data: { pelajaran },
+  });
+};
+export const deleteTestPelajaran = async () => {
+  return await prismaClient.$executeRaw`delete from pelajaran`;
+};
+
+export const getTestPelajaran = async (pelajaran) => {
+  return await prismaClient.pelajaran.findFirst({
+    where: {
+      pelajaran,
+    },
+  });
 };
 
 export const cookies = (cookies) => {

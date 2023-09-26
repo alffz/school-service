@@ -126,7 +126,7 @@ Response Body Error
 
 ## GET
 
-Endpoint : GET /api/v1/pelajaran?page=1&perPage=10&sort=asc
+Endpoint : GET /api/v1/pelajaran?page=1&perPage=10
 
 Header :
 
@@ -140,18 +140,20 @@ Response Body Success
   "message": "SUCCESS",
   "data": [
     {
-      "username": "alfri",
-      "email": "alfri@gmail.com",
-      "kelas": "XII D",
-      "guru": "Siti aira"
+      "id": 1,
+      "pelajaran": "IPA"
     },
     {
-      "username": "alfri",
-      "email": "alfri@gmail.com",
-      "kelas": "XII D",
-      "guru": "siti aira"
+      "id": 2,
+      "pelajaran": "IPS"
     }
-  ]
+  ],
+  "page": {
+    "perPage": 20,
+    "total": 100,
+    "totalPage": 5,
+    "current": 1
+  }
 }
 ```
 
