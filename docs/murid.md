@@ -49,7 +49,7 @@ Header :
 
     - Authorization : token
     - role : admin = all fields
-           : murid = email,password
+           : murid = uername,email,password
 
 Request Body
 
