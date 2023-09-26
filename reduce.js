@@ -41,4 +41,77 @@ async function getUser() {
   } catch (err) {}
 }
 
-getUser();
+// getUser();
+// const string = "";
+// const num = string || 1;
+// console.log(string);
+// console.log(num);
+
+const users = "admin";
+const userFields = {
+  admin: ["username", "email", "password", "id_kelas"],
+  guru: ["username", "email", "password"],
+};
+const allowedFields = userFields[users];
+const data = {
+  username: "foo",
+  email: "foo@gmail.com",
+  password: "123",
+  id_kelas: 1,
+};
+
+const request = {};
+for (let value of allowedFields) {
+  // console.log(value);
+  request[value] = data[value];
+}
+// console.log(request);
+
+const reqs = (data, allowedFields) => {
+  const request = {};
+  for (let value of allowedFields) {
+    // console.log(value);
+    request[value] = data[value];
+  }
+  return request;
+};
+console.log(reqs(data, allowedFields));
+
+export const requestFiltered = (data, allowedFields) => {
+  const keys = Object.keys(data);
+  const allowedAllFields = keys.every((filed) => allowedFields.includes(filed));
+
+  if (!allowedAllFields) {
+    const notAllowed = keys.filter((field) => !allowedFields.includes(field));
+    throw new ResponseError(403, `kolom ${notAllowed} tidak diijinkan`);
+  }
+
+  const request = {};
+  for (let value of allowedFields) {
+    request[value] = data[value];
+  }
+  return request;
+};
+
+export const requestFiltered1 = (data, allowedFields) => {
+  const keys = Object.keys(data);
+  const allowedAllFields = keys.every((filed) => allowedFields.includes(filed));
+
+  if (!allowedAllFields) {
+    const notAllowed = keys.filter((field) => !allowedFields.includes(field));
+    throw new ResponseError(403, `kolom ${notAllowed} tidak diijinkan`);
+  }
+
+  return data;
+};
+
+export const requestFiltered2 = (data, allowedFields) => {
+  const keys = Object.keys(data);
+  const notAllowed = keys.filter((field) => !allowedFields.includes(field));
+
+  if (notAllowed.length > 0) {
+    throw new ResponseError(403, `kolom ${notAllowed} tidak diijinkan`);
+  }
+
+  return data;
+};

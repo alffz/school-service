@@ -122,7 +122,6 @@ Response Body Success
   "data": {
     "username": "alfri",
     "email": "alfri@gmail.com",
-    "password": "secret",
     "kelas": "XI A"
   }
 }
@@ -136,53 +135,21 @@ Response Body Error
 }
 ```
 
-## GET guru By name
+## GET guru
 
-Endpoint : GET /api/v1/guru?name=alfri&page=1&pageSize=10
-
-Header :
-
-    - Authorization : token
-    - role : ADMIN
-
-Response Body Success
-
-```json
-{
-  "message": "SUCCESS",
-  "data": [
-    {
-      "id_guru": 1,
-      "username": "alfri",
-      "email": "alfir@gmail.com",
-      "kelas": "XI A"
-    },
-    {
-      "id_guru": 2,
-      "username": "alex",
-      "email": "alex@gmail.com",
-      "kelas": "XI "
-    }
-  ]
-}
-```
-
-Response Body Error
-
-```json
-{
-  "errors": ["User not found"]
-}
-```
-
-## GET guru page
-
-Endpoint : GET /api/v1/guru?page=1&perPage=10&sort=asc
+Endpoint : GET /api/v1/guru?username=alfri&page=1&pageSize=10&sort=asc
 
 Header :
 
     - Authorization : token
-    - role : ADMIN
+    - role : admin,murid,guru
+
+Request params
+
+- username : optioanl
+- page : optioanl default 1
+- perPage : optional default 20
+- sort :optioan default asc
 
 Response Body Success
 
