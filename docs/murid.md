@@ -53,8 +53,6 @@ Header :
 
 Request Body
 
-Request Body
-
 - username : required String max(50)
 - email : required unique max(50)
 - password : required String
@@ -110,75 +108,9 @@ Response Body Error
 }
 ```
 
-## GET all
-
-Endpoint : GET /api/v1/murid?page=1&perPage=10&sort=asc
-
-Header :
-
-    - Authorization : token
-    - role : admin = username,email,kelas
-           : guru = username,email,kelas
-           : murid = all
-
-Response Body Success
-
-```json
-{
-  "message": "SUCCESS",
-  "data": {
-    "username": "alfri",
-    "email": "alfri@gmail.com",
-    "password": "rahasia",
-    "kelas": "XII D"
-  }
-}
-```
-
-Response Body Error
-
-```json
-{
-  "errors": ["murid tidak ditemukan"]
-}
-```
-
 ## GET by id
 
 Endpoint : GET /api/v1/murid/:id
-
-Header :
-
-    - Authorization : token
-    - role : admin = username,email,kelas
-           : guru = username,email,kelas
-           : murid = all
-
-Response Body Success
-
-```json
-{
-  "message": "SUCCESS",
-  "data": {
-    "username": "alfri",
-    "email": "alfri@gmail.com",
-    "password": "rahasia",
-    "kelas": "XII D"
-  }
-}
-```
-
-Response Body Error
-
-```json
-{
-  "errors": ["murid tidak ditemukan"]
-}
-```
-
-## GET By name
-
-Endpoint : GET /api/v1/murid?nama='alfri'&page=1&perPage=10&sort=asc
 
 Header :
 
@@ -190,18 +122,49 @@ Response Body Success
 ```json
 {
   "message": "SUCCESS",
+  "data": {
+    "id": 1,
+    "username": "alfri",
+    "email": "alfri@gmail.com",
+    "kelas": "XII D"
+  }
+}
+```
+
+Response Body Error
+
+```json
+{
+  "errors": ["murid tidak ditemukan"]
+}
+```
+
+## GET all
+
+Endpoint : GET /api/v1/murid?username=alfir&page=1&perPage=10
+
+Header :
+
+    - Authorization : token
+    - role : admin guru murid
+
+Response Body Success
+
+```json
+{
+  "message": "SUCCESS",
   "data": [
     {
+      "id": 1,
       "username": "alfri",
       "email": "alfri@gmail.com",
-      "kelas": "XII D",
-      "guru": "Siti aira"
+      "kelas": "XII D"
     },
     {
+      "id": 2,
       "username": "alfri",
       "email": "alfri@gmail.com",
-      "kelas": "XII D",
-      "guru": "siti aira"
+      "kelas": "XII D"
     }
   ]
 }
@@ -211,6 +174,6 @@ Response Body Error
 
 ```json
 {
-  "errors": ["data tidak ditemukan"]
+  "errors": ["murid tidak ditemukan"]
 }
 ```

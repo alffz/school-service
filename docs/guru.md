@@ -149,7 +149,6 @@ Request params
 - username : optioanl
 - page : optioanl default 1
 - perPage : optional default 20
-- sort :optioan default asc
 
 Response Body Success
 

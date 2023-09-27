@@ -8,6 +8,7 @@ import ruangKelas from "../routes/ruang-kelas-route.js";
 import kelasRoute from "../routes/kelas-route.js";
 import guruRoute from "../routes/guru-route.js";
 import pelajaranRoute from "../routes/pelajaran-route.js";
+import muridRoute from "../routes/murid-route.js";
 
 const web = express();
 web.use(cookieParser());
@@ -22,6 +23,7 @@ web.use(ruangKelas);
 web.use(kelasRoute);
 web.use(guruRoute);
 web.use(pelajaranRoute);
+web.use(muridRoute);
 
 web.use(errorMiddleware);
 

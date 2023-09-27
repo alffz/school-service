@@ -37,6 +37,22 @@ export const createTestGuru = async ({
   });
 };
 
+export const createTestMurid = async ({
+  username,
+  email,
+  password,
+  id_kelas,
+}) => {
+  return prismaClient.murid.create({
+    data: {
+      username,
+      email,
+      password,
+      id_kelas: id_kelas,
+    },
+  });
+};
+
 export const deleteUser = async ({ email, role }) => {
   const roles = {
     admin: prismaClient.admin,
