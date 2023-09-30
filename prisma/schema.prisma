@@ -79,7 +79,7 @@ model Jadwal {
   id_guru      Int
   id_kelas     Int
   hari         Int // 0-6
-  mulai        Json // {hour:1,minute:1}
+  mulai        Json // {hour:0,minute:0}
   berakhir     Json // {hour:24,minute:59}
   status       Boolean @default(false) // false sedang berlangsung
 

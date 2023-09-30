@@ -31,7 +31,8 @@
   "jest": {
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"
-    }
+    },
+    "maxWorkers":1
   },
   "author": "alfriansyah",
   "license": "ISC"
