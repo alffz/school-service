@@ -26,7 +26,7 @@ Request Body
   "id_kelas": 1,
   "hari": 0,
   "mulai": { "jam": 09, "menit": 00 },
-  "berakhir": { "jam": 10, "menit": 00 },
+  "berakhir": { "jam": 10, "menit": 59 },
   "status": false
 }
 ```
@@ -156,7 +156,7 @@ Response Body Error
 
 ## GET by hari
 
-Endpoint : GET /api/v1/jadwal?hari=senin&nama=alf&status=true&page=1&perPage=10&sort=asc
+Endpoint : GET /api/v1/jadwal/hari/:hari?page=1&perPage=10
 
 Header :
 
@@ -165,32 +165,240 @@ Header :
 
 Request param
 
-- hari : required
-- nama : optional
+- hari : optioanl default senin
+- page : optional default 1
+- perPage : optional default 20
+
+```json
+{
+  "message": "SUCCESS",
+  "hari": "senin",
+  "data": [
+    {
+      "id": 1,
+      "guru": "Alfri",
+      "kelas": "A",
+      "pelajaran": "MM",
+      "mulai": "08:00",
+      "berakhir": "09:00",
+      "status": true
+    },
+    {
+      "id": 2,
+      "guru": "Agus",
+      "kelas": "A",
+      "pelajaran": "MM",
+      "mulai": "08:00",
+      "berakhir": "09:00",
+      "status": true
+    },
+    {
+      "id": 3,
+      "guru": "Arjuna",
+      "kelas": "A",
+      "pelajaran": "MM",
+      "mulai": "08:00",
+      "berakhir": "09:00",
+      "status": true
+    }
+  ],
+  "page": {
+    "perpPage": 10,
+    "total": 50,
+    "totalPage": 5,
+    "current": 1
+  }
+}
+```
+
+Response Body Error
+
+```json
+{
+  "errors": ["data tidak ditemukan"]
+}
+```
+
+## GET by guru name
+
+Endpoint : GET /api/v1/jadwal/guru?username=alfri&status=true
+
+Header :
+
+    - Authorization : token
+    - role : admin guru
+
+Request param
+
+- username : required
 - status : optional
 
 ```json
 {
   "message": "SUCCESS",
-  "data": [
-    {
-      "siti": "XI C",
-      "status": true
-    },
-    {
-      "aira": "XII C",
-      "status": true
-    },
-    {
-      "sindi": "X C",
-      "status": true
+  "data": {
+    "guru": "Sinmay",
+    "hari": {
+      "senin": [
+        {
+          "id": 1,
+          "kelas": "A",
+          "Pelajaran": "MM",
+          "jam": "08:00 - 09:00",
+          "status": true
+        },
+        {
+          "id": 1,
+          "kelas": "A",
+          "Pelajaran": "MM",
+          "jam": "08:00 - 09:00",
+          "status": true
+        },
+        {
+          "id": 1,
+          "kelas": "A",
+          "Pelajaran": "MM",
+          "jam": "08:00 - 09:00",
+          "status": true
+        }
+      ],
+      "selasa": [
+        {
+          "id": 1,
+          "kelas": "A",
+          "Pelajaran": "MM",
+          "jam": "08:00 - 09:00",
+          "status": true
+        },
+        {
+          "id": 2,
+          "kelas": "B",
+          "Pelajaran": "IPA",
+          "jam": "9:00 - 10:00",
+          "status": true
+        },
+        {
+          "id": 4,
+          "kelas": "C",
+          "Pelajaran": "IPS",
+          "jam": "10:00 - 11:00",
+          "status": true
+        }
+      ],
+      "rabu": [
+        {
+          "id": 1,
+          "kelas": "A",
+          "Pelajaran": "MM",
+          "jam": "08:00 - 09:00"
+        },
+        {
+          "id": 2,
+          "kelas": "B",
+          "Pelajaran": "IPA",
+          "jam": "9:00 - 10:00"
+        },
+        {
+          "id": 4,
+          "kelas": "C",
+          "Pelajaran": "IPS",
+          "jam": "10:00 - 11:00"
+        }
+      ]
     }
-  ],
-  "page": {
-    "size": 10,
-    "total": 50,
-    "totalPage": 5,
-    "current": 2
+  }
+}
+```
+
+Response Body Error
+
+```json
+{
+  "errors": ["data tidak ditemukan"]
+}
+```
+
+## GET by kelas
+
+Endpoint : GET /api/v1/jadwal/kelas?klas=XII
+
+Header :
+
+    - Authorization : token
+    - role : admin murid
+
+Request params
+
+- kelas : required
+
+```json
+{
+  "message": "SUCCESS",
+  "data": {
+    "kelas": "XII A",
+    "hari": {
+      "senin": [
+        {
+          "id": 1,
+          "guru": "Sinmay",
+          "Pelajaran": "MM",
+          "mulai": { "jam": 8, "menit": 0 },
+          "berakhir": { "jam": 8, "menit": 0 }
+        },
+        {
+          "id": 2,
+          "kelas": "agus",
+          "Pelajaran": "IPA",
+          "jam": "9:00 - 10:00"
+        },
+        {
+          "id": 4,
+          "kelas": "ridwan",
+          "Pelajaran": "IPS",
+          "jam": "10:00 - 11:00"
+        }
+      ],
+      "selasa": [
+        {
+          "id": 1,
+          "kelas": "A",
+          "Pelajaran": "MM",
+          "jam": "08:00 - 09:00"
+        },
+        {
+          "id": 2,
+          "kelas": "B",
+          "Pelajaran": "IPA",
+          "jam": "9:00 - 10:00"
+        },
+        {
+          "id": 4,
+          "kelas": "C",
+          "Pelajaran": "IPS",
+          "jam": "10:00 - 11:00"
+        }
+      ],
+      "rabu": [
+        {
+          "id": 1,
+          "kelas": "A",
+          "Pelajaran": "MM",
+          "jam": "08:00 - 09:00"
+        },
+        {
+          "id": 2,
+          "kelas": "B",
+          "Pelajaran": "IPA",
+          "jam": "9:00 - 10:00"
+        },
+        {
+          "id": 4,
+          "kelas": "C",
+          "Pelajaran": "IPS",
+          "jam": "10:00 - 11:00"
+        }
+      ]
+    }
   }
 }
 ```

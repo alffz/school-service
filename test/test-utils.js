@@ -155,6 +155,24 @@ export const getTestPelajaran = async (pelajaran) => {
   });
 };
 
+export const deleteAllJadwal = async () => {
+  return await prismaClient.$executeRaw`delete from jadwal`;
+};
+export const deleteAllKelas = async () => {
+  return await prismaClient.$executeRaw`delete from kelas`;
+};
+export const deleteAllRuangKelas = async () => {
+  return await prismaClient.$executeRaw`delete from ruang_kelas`;
+};
+export const deleteAllGuru = async () => {
+  return await prismaClient.$executeRaw`delete from guru`;
+};
+export const deleteAllMurid = async () => {
+  return await prismaClient.$executeRaw`delete from murid`;
+};
+export const deleteAllAdmin = async () => {
+  return await prismaClient.$executeRaw`delete from admin`;
+};
 export const cookies = (cookies) => {
   const cookie = cookies.reduce((acc, curr) => {
     const [key, value] = curr.split("=");
@@ -164,6 +182,29 @@ export const cookies = (cookies) => {
   return cookie;
 };
 
+export const getTestJadawl = async (request) => {
+  return prismaClient.jadwal.findFirst();
+};
+
+export const createTestJadwal = async ({
+  id_pelajaran,
+  id_guru,
+  id_kelas,
+  hari,
+  mulai,
+  berakhir,
+}) => {
+  return prismaClient.jadwal.create({
+    data: {
+      id_pelajaran,
+      id_guru,
+      id_kelas,
+      hari,
+      mulai,
+      berakhir,
+    },
+  });
+};
 // export const getTestUser = async (email) => {
 //   return prismaClient.user.findFirst({
 //     where: {

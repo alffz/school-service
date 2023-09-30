@@ -6,37 +6,17 @@ import {
   idSchema,
   hariSchema,
   userNameSchema,
-  statusSchema,
+  kelasSchema,
   pageSchema,
   perPageSchema,
 } from "../validation/jadwal-validation.js";
+import { days, daysByNumber } from "../utils/days.js";
 
 const create = async (request) => {
   request = validate(createSchema, request);
-  // console.log(request);
-  const schedule = await prismaClient.$queryRaw`SELECT *
-    FROM jadwal
-      WHERE 
-        id_kelas = ${request.id_kelas}
-        AND id_guru = ${request.id_guru}
-        AND hari = ${request.hari}
-        AND ((
-          CAST(JSON_EXTRACT(mulai, '$.jam') AS UNSIGNED) * 60 +
-          CAST(JSON_EXTRACT(mulai, '$.menit') AS UNSIGNED)
-        ) BETWEEN ${request.mulai.jam} * 60 + ${request.mulai.menit} AND ${request.berakhir.jam} * 60 + ${request.berakhir.menit}
-        OR (
-          CAST(JSON_EXTRACT(berakhir, '$.jam') AS UNSIGNED) * 60 +
-          CAST(JSON_EXTRACT(berakhir, '$.menit') AS UNSIGNED)
-        ) BETWEEN ${request.mulai.jam} * 60 + ${request.mulai.menit} AND ${request.berakhir.jam} * 60 + ${request.berakhir.menit})`;
-  console.log(schedule.length);
-  if (schedule.length > 0) {
-    throw new ResponseError(409, ["jadwal bentrok"]);
-  }
-
   const result = await prismaClient.jadwal.create({
     data: request,
   });
-  // console.log(result);
   return result;
 };
 
@@ -55,67 +35,13 @@ const update = async ({ id, request }) => {
 
   request = validate(createSchema, request);
 
-  // 1. jika ada data yang berubah , cek lagi ke db apakah datanya gak bentrok
-  if (
-    jadwal.id_pelajaran !== request.id_pelajaran ||
-    jadwal.id_guru !== request.id_guru ||
-    jadwal.id_kelas !== request.id_kelas ||
-    jadwal.hari !== request.hari ||
-    JSON.stringify(jadwal.mulai) !== SON.stringify(request.mulai) ||
-    JSON.stringify(jadwal.berakhir) !== SON.stringify(request.berakhir)
-  ) {
-    const jadwaldata = await prismaClient.$executeRaw`SELECT *
-    FROM jadwal
-    WHERE id_guru = ${jadwal.id_guru}
-      AND id_kelas = ${jadwal.id_kelas}
-      AND hari = ${jadwal.hari}
-      AND (
-        (
-          CAST(JSON_EXTRACT(mulai, '$.jam') AS UNSIGNED) > ${jadwal.berakhir.jam}
-          OR (
-            CAST(JSON_EXTRACT(mulai, '$.jam') AS UNSIGNED) = ${jadwal.berakhir.jam}
-            AND CAST(JSON_EXTRACT(mulai, '$.menit') AS UNSIGNED) > ${jadwal.berakhir.menit}
-          )
-        )
-        OR (
-          CAST(JSON_EXTRACT(mulai, '$.jam') AS UNSIGNED) < ${jadwal.mulai.jam}
-          OR (
-            CAST(JSON_EXTRACT(mulai, '$.jam') AS UNSIGNED) = ${jadwal.mulai.jam}
-            AND CAST(JSON_EXTRACT(mulai, '$.menit') AS UNSIGNED) < ${jadwal.mulai.menit}
-          )
-        )
-    );
-    `;
-
-    if (jadwaldata) {
-      throw new ResponseError(409, ["jadwal bentrok"]);
-    } else {
-      return await prismaClient.jadwal.update({
-        where: {
-          id: id,
-        },
-        data: request,
-      });
-    }
-  }
-
-  // // 2 kalau emailnya berubah cek apakah email tersebut udah dipake
-  // const email = await prismaClient.jadwal.count({
-  //   where: {
-  //     email: request.email,
-  //   },
-  // });
-
-  // if (email === 1) {
-  //   throw new ResponseError(409, ["email telah digunakan"]);
-  // }
-
-  // return await prismaClient.jadwal.update({
-  //   where: {
-  //     id: id,
-  //   },
-  //   data: request,
-  // });
+  const result = await prismaClient.jadwal.update({
+    where: {
+      id: id,
+    },
+    data: request,
+  });
+  return result;
 };
 
 const remove = async (id) => {
@@ -146,6 +72,7 @@ const getById = async ({ id }) => {
       id: id,
     },
     select: {
+      id: true,
       pelajaran: {
         select: {
           pelajaran: true,
@@ -171,66 +98,81 @@ const getById = async ({ id }) => {
   if (!data) {
     throw new ResponseError(404, ["data jadwal tidak ditemukan"]);
   }
-
-  return data;
+  return {
+    id: data?.id,
+    pelajaran: data.pelajaran?.pelajaran,
+    guru: data.guru?.guru,
+    kelas: data.kelas?.kelas,
+    hari: data?.hari,
+    mulai: data?.mulai,
+    berakhir: data?.berakhir,
+    status: data?.status,
+  };
 };
 
-const get = async ({ page, perPage, username }) => {
+const get = async ({ page, perPage, hari }) => {
   page = validate(pageSchema, page);
   perPage = validate(perPageSchema, perPage);
+  hari = validate(hariSchema, hari);
+  hari = days[hari];
 
-  const select = {
-    id: true,
-    pelajaran: {
-      select: {
-        pelajaran: true,
-      },
-    },
-    guru: {
-      select: {
-        username: true,
-      },
-    },
-    kelas: {
-      select: {
-        kelas: true,
-      },
-    },
-    hari: true,
-    mulai: true,
-    berakhir: true,
-    status: true,
-  };
-
-  const query = {
+  const data = await prismaClient.jadwal.findMany({
     take: perPage,
     skip: (page - 1) * perPage,
-    select,
-  };
+    where: {
+      hari: hari,
+    },
+    select: {
+      id: true,
+      guru: {
+        select: {
+          username: true,
+        },
+      },
+      kelas: {
+        select: {
+          kelas: true,
+        },
+      },
+      pelajaran: {
+        select: {
+          pelajaran: true,
+        },
+      },
+      mulai: true,
+      berakhir: true,
+      status: true,
+    },
+    orderBy: {
+      guru: {
+        username: "asc",
+      },
+    },
+  });
 
-  if (username) {
-    // https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and-sorting#filtering
-    username = validate(userNameSchema, username);
-
-    query.where = {
-      username: username,
-    };
+  if (data.length <= 0) {
+    throw new ResponseError(404, ["data jadwal tidak ditemukan"]);
   }
 
-  const data = await prismaClient.jadwal.findMany(query);
-
-  // data.map((data) => {
-  //   const kelas = (data.kelas = data.kelas?.kelas);
-  //   return kelas;
-  // });
-
-  // use same where
   const totalData = await prismaClient.jadwal.count({
-    where: query.where,
+    where: {
+      hari: hari,
+    },
+  });
+  const result = data.map((item) => {
+    return {
+      id: item.id,
+      guru: item.guru.username,
+      kelas: item.kelas.kelas,
+      pelajaran: item.pelajaran.pelajaran,
+      mulai: item.mulai,
+      berakhir: item.berakhir,
+      statur: item.status,
+    };
   });
 
   return {
-    data,
+    data: result,
     page: {
       perPage: perPage,
       total: totalData,
@@ -239,7 +181,134 @@ const get = async ({ page, perPage, username }) => {
     },
   };
 };
-export default { create, update, remove, getById, get };
+
+const getByGuru = async ({ username }) => {
+  username = validate(userNameSchema, username);
+
+  const data = await prismaClient.jadwal.findMany({
+    where: {
+      guru: {
+        username: username,
+      },
+    },
+    select: {
+      id: true,
+      guru: {
+        select: {
+          username: true,
+        },
+      },
+      kelas: {
+        select: {
+          kelas: true,
+        },
+      },
+      pelajaran: {
+        select: {
+          pelajaran: true,
+        },
+      },
+      hari: true,
+      mulai: true,
+      berakhir: true,
+      status: true,
+    },
+    orderBy: {
+      guru: {
+        username: "asc",
+      },
+    },
+  });
+
+  if (data.length <= 0) {
+    throw new ResponseError(404, ["data jadwal tidak ditemukan"]);
+  }
+  // const username = data[0];
+  const result = data.reduce((acc, curr) => {
+    const byHari = data
+      .filter(({ hari }) => hari === curr.hari)
+      .map((item) => {
+        return {
+          id: item.id,
+          guru: item.guru.username,
+          kelas: item.kelas.kelas,
+          pelajaran: item.pelajaran.pelajaran,
+          hari: item.hari,
+          mulai: item.mulai,
+          berakhir: item.berakhir,
+          status: item.status,
+        };
+      });
+    const hari = curr.hari;
+    acc[daysByNumber[hari]] = byHari;
+    return acc;
+  }, {});
+  return {
+    guru: username,
+    data: result,
+  };
+};
+
+const getByKelas = async ({ kelas }) => {
+  kelas = validate(kelasSchema, kelas);
+
+  const data = await prismaClient.jadwal.findMany({
+    where: {
+      kelas: {
+        kelas: kelas,
+      },
+    },
+    select: {
+      id: true,
+      guru: {
+        select: {
+          username: true,
+        },
+      },
+      pelajaran: {
+        select: {
+          pelajaran: true,
+        },
+      },
+      hari: true,
+      mulai: true,
+      berakhir: true,
+    },
+    orderBy: {
+      hari: "asc",
+    },
+  });
+
+  if (data.length <= 0) {
+    throw new ResponseError(404, ["data jadwal tidak ditemukan"]);
+  }
+
+  const result = data.reduce((acc, curr) => {
+    const byHari = data
+      .filter(({ hari }) => hari === curr.hari)
+      .map((item) => {
+        return {
+          id: item.id,
+          guru: item.guru.username,
+          pelajaran: item.pelajaran.pelajaran,
+          hari: item.hari,
+          mulai: item.mulai,
+          berakhir: item.berakhir,
+        };
+      });
+    const hari = curr.hari;
+    acc[daysByNumber[hari]] = byHari;
+    return acc;
+  }, {});
+  return {
+    data: {
+      kelas: kelas,
+      hari: result,
+    },
+  };
+};
+export default { create, update, remove, getById, get, getByGuru, getByKelas };
+
 const createJadwal = async () => {
   const result = await prismaClient.$queryRaw`select * from jadwal`;
   console.log(result);
