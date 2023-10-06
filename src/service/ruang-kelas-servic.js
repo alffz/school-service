@@ -30,7 +30,7 @@ const update = async (id, request) => {
 
   const ruangKelas = await prismaClient.ruang_kelas.findFirst({
     where: {
-      id_ruang_kelas: id,
+      id: id,
     },
   });
 
@@ -45,7 +45,7 @@ const update = async (id, request) => {
   if (ruangKelas.nomor_ruangan === request.nomor_ruangan) {
     return prismaClient.ruang_kelas.update({
       where: {
-        id_ruang_kelas: id,
+        id: id,
       },
       data: request,
     });
@@ -64,7 +64,7 @@ const update = async (id, request) => {
 
   return await prismaClient.ruang_kelas.update({
     where: {
-      id_ruang_kelas: id,
+      id: id,
     },
     data: request,
   });
@@ -75,7 +75,7 @@ const remove = async (id) => {
 
   const countRuangKelas = await prismaClient.ruang_kelas.count({
     where: {
-      id_ruang_kelas: id,
+      id: id,
     },
   });
 
@@ -85,7 +85,7 @@ const remove = async (id) => {
 
   return prismaClient.ruang_kelas.delete({
     where: {
-      id_ruang_kelas: id,
+      id: id,
     },
   });
 };
@@ -95,7 +95,7 @@ const getById = async (id) => {
 
   const data = await prismaClient.ruang_kelas.findFirst({
     where: {
-      id_ruang_kelas: id,
+      id: id,
     },
   });
   if (!data) {

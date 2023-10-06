@@ -29,7 +29,7 @@ const update = async (id, request) => {
 
   const kelas = await prismaClient.kelas.findFirst({
     where: {
-      id_kelas: id,
+      id: id,
     },
   });
 
@@ -44,7 +44,7 @@ const update = async (id, request) => {
   if (kelas.kelas === request.kelas) {
     return prismaClient.kelas.update({
       where: {
-        id_kelas: id,
+        id: id,
       },
       data: request,
     });
@@ -63,7 +63,7 @@ const update = async (id, request) => {
 
   return await prismaClient.kelas.update({
     where: {
-      id_kelas: id,
+      id: id,
     },
     data: request,
   });
@@ -74,7 +74,7 @@ const remove = async (id) => {
 
   const countKelas = await prismaClient.kelas.count({
     where: {
-      id_kelas: id,
+      id: id,
     },
   });
 
@@ -84,7 +84,7 @@ const remove = async (id) => {
 
   return prismaClient.kelas.delete({
     where: {
-      id_kelas: id,
+      id: id,
     },
   });
 };
@@ -94,7 +94,7 @@ const getById = async (id) => {
 
   const data = await prismaClient.kelas.findFirst({
     where: {
-      id_kelas: id,
+      id: id,
     },
   });
   if (!data) {
@@ -142,4 +142,37 @@ const get = async ({ page, perPage, kelas }) => {
   };
 };
 
-export default { create, update, remove, getById, get };
+const getMuridAtClass = async ({ id_kelas }) => {
+  id_kelas = validate(idSchema, id_kelas);
+
+  const kelas = await prismaClient.kelas.findFirst({
+    where: {
+      id: id_kelas,
+    },
+  });
+
+  if (!kelas) {
+    throw new ResponseError(404, ["kelas tidak ditemukan"]);
+  }
+
+  const data = await prismaClient.murid.findMany({
+    where: {
+      id_kelas: id_kelas,
+    },
+    select: {
+      id: true,
+      username: true,
+    },
+  });
+
+  if (data.length === 0) {
+    throw new ResponseError(404, ["Murid tidak ditemukan"]);
+  }
+
+  return {
+    kelas: kelas.kelas,
+    murid: data,
+  };
+};
+
+export default { create, update, remove, getById, get, getMuridAtClass };

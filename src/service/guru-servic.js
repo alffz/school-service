@@ -129,8 +129,6 @@ const get = async ({ page, perPage, sort, username }) => {
   page = validate(pageSchema, page);
   perPage = validate(perPageSchema, perPage);
   sort = validate(sortSchema, sort);
-  console.log(typeof page, typeof perPage);
-  console.log(page, perPage);
 
   const select = {
     id: true,
@@ -151,7 +149,7 @@ const get = async ({ page, perPage, sort, username }) => {
   if (username) {
     // https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and-sorting#filtering
     username = validate(userNameSchema, username);
-    console.log(username);
+
     query.where = {
       username: username,
     };

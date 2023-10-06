@@ -173,6 +173,12 @@ export const deleteAllMurid = async () => {
 export const deleteAllAdmin = async () => {
   return await prismaClient.$executeRaw`delete from admin`;
 };
+export const deleteAllKehadiranMurid = async () => {
+  return await prismaClient.$executeRaw`delete from kehadiran_murid`;
+};
+export const deleteAllKehadiranGuru = async () => {
+  return await prismaClient.$executeRaw`delete from kehadiran_guru`;
+};
 export const cookies = (cookies) => {
   const cookie = cookies.reduce((acc, curr) => {
     const [key, value] = curr.split("=");
@@ -182,7 +188,7 @@ export const cookies = (cookies) => {
   return cookie;
 };
 
-export const getTestJadawl = async (request) => {
+export const getTestJadawl = async () => {
   return prismaClient.jadwal.findFirst();
 };
 
@@ -205,13 +211,22 @@ export const createTestJadwal = async ({
     },
   });
 };
-// export const getTestUser = async (email) => {
-//   return prismaClient.user.findFirst({
-//     where: {
-//       email: email,
-//     },
-//   });
-// };
 
-// createAdmin();
-// removeUser();
+export const getManyTestMurid = async () => {
+  return await prismaClient.murid.findMany({
+    select: {
+      id: true,
+    },
+  });
+};
+
+export const setStatusJadwalToTrue = async (id) => {
+  return await prismaClient.jadwal.update({
+    where: {
+      id: id,
+    },
+    data: {
+      status: true,
+    },
+  });
+};

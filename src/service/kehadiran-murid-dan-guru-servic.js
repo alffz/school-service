@@ -99,7 +99,7 @@ const create = async (request) => {
 const get = async ({ id, tanggal }) => {
   id = validate(idSchema, id);
   tanggal = validate(tanggalSchema, tanggal);
-  console.log(id, tanggal);
+
   const kehadiranMurid = await prismaClient.kehadiran_murid.findMany({
     where: {
       id_jadwal: id,

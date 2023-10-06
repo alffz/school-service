@@ -58,4 +58,14 @@ const get = async (req, res, next) => {
   }
 };
 
-export default { create, update, remove, getById, get };
+const getMuridAtClass = async (req, res, next) => {
+  try {
+    const id_kelas = req.params.id;
+    const result = await kelasService.getMuridAtClass({ id_kelas });
+    res.status(200).json({ message: "SUCCESS", data: result }).end();
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { create, update, remove, getById, get, getMuridAtClass };

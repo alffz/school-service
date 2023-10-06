@@ -62,7 +62,7 @@ describe("POST /api/v1/kehadiran-murid/", () => {
     });
 
     const jadwal = await getTestJadawl();
-    // console.log(jadwal);
+
     for (let i = 1; i < 20; i++) {
       await createTestMurid({
         username: `murid ${i}`,
@@ -75,7 +75,7 @@ describe("POST /api/v1/kehadiran-murid/", () => {
     const murid = getTestMurids.map((murid) => {
       return { ...murid, keterangan: "hadir" };
     });
-    // console.log(murid);
+
     const login = await supertest(web)
       .post("/api/v1/user/login")
       .send({ email: "guru@gmail.com", password: "123", role: "guru" });
@@ -91,9 +91,7 @@ describe("POST /api/v1/kehadiran-murid/", () => {
         tanggal: jam.toISOString(),
         murid: murid,
       });
-    // console.log(result.body.errors);
-    console.log(result.status);
-    console.log(result.body.data);
+
     expect(result.status).toBe(200);
     expect(result.body.message).toBe("SUCCESS");
   });
@@ -124,20 +122,20 @@ describe("POST /api/v1/kehadiran-murid/", () => {
 
     const jadwal = await getTestJadawl();
     await setStatusJadwalToTrue(jadwal.id);
-    // console.log(jadwal);
-    for (let i = 1; i < 20; i++) {
-      await createTestMurid({
-        username: `murid ${i}`,
-        email: `email${i}`,
-        password: "123",
-        id_kelas: kelas.id,
-      });
-    }
-    const getTestMurids = await getManyTestMurid();
-    const murid = getTestMurids.map((murid) => {
-      return { ...murid, keterangan: "hadir" };
-    });
-    // console.log(murid);
+
+    // for (let i = 1; i < 20; i++) {
+    //   await createTestMurid({
+    //     username: `murid ${i}`,
+    //     email: `email${i}`,
+    //     password: "123",
+    //     id_kelas: kelas.id,
+    //   });
+    // }
+    // const getTestMurids = await getManyTestMurid();
+    // const murid = getTestMurids.map((murid) => {
+    //   return { ...murid, keterangan: "hadir" };
+    // });
+
     const login = await supertest(web)
       .post("/api/v1/user/login")
       .send({ email: "guru@gmail.com", password: "123", role: "guru" });
@@ -151,12 +149,10 @@ describe("POST /api/v1/kehadiran-murid/", () => {
         id_jadwal: jadwal.id,
         id_guru: id,
         tanggal: jam.toISOString(),
-        murid: murid,
+        murid: [{ id: 1, keterangan: "hadir" }],
       });
-    console.log(result.body.errors);
-    console.log(result.status);
+
     expect(result.status).toBe(403);
-    // expect(result.body.message).toBe("SUCCESS");
   });
 
   it("shoulde reject jadwal not found", async () => {
@@ -240,7 +236,7 @@ describe("POST /api/v1/kehadiran-murid/", () => {
     });
 
     const jadwal = await getTestJadawl();
-    // console.log(jadwal);
+
     for (let i = 1; i < 20; i++) {
       await createTestMurid({
         username: `murid ${i}`,
@@ -253,7 +249,7 @@ describe("POST /api/v1/kehadiran-murid/", () => {
     const murid = getTestMurids.map((murid) => {
       return { ...murid, keterangan: "hadir" };
     });
-    // console.log(murid);
+
     const login = await supertest(web)
       .post("/api/v1/user/login")
       .send({ email: "guru@gmail.com", password: "123", role: "guru" });
@@ -269,9 +265,7 @@ describe("POST /api/v1/kehadiran-murid/", () => {
         tanggal: jam.toISOString(),
         murid: murid,
       });
-    // console.log(result.body.errors);
-    console.log(result.status);
-    console.log(result.body.errors);
+
     expect(result.status).toBe(400);
   });
   it("should reject portal belum dibuka", async () => {
@@ -299,7 +293,7 @@ describe("POST /api/v1/kehadiran-murid/", () => {
     });
 
     const jadwal = await getTestJadawl();
-    // console.log(jadwal);
+
     for (let i = 1; i < 20; i++) {
       await createTestMurid({
         username: `murid ${i}`,
@@ -312,7 +306,7 @@ describe("POST /api/v1/kehadiran-murid/", () => {
     const murid = getTestMurids.map((murid) => {
       return { ...murid, keterangan: "hadir" };
     });
-    // console.log(murid);
+
     const login = await supertest(web)
       .post("/api/v1/user/login")
       .send({ email: "guru@gmail.com", password: "123", role: "guru" });
@@ -328,9 +322,7 @@ describe("POST /api/v1/kehadiran-murid/", () => {
         tanggal: jam.toISOString(),
         murid: murid,
       });
-    // console.log(result.body.errors);
-    console.log(result.status);
-    console.log(result.body.errors);
+
     expect(result.status).toBe(400);
   });
 });
@@ -372,7 +364,7 @@ describe("get /api/v1/kehadiran-murid/", () => {
     });
 
     const jadwal = await getTestJadawl();
-    // console.log(jadwal);
+
     for (let i = 1; i < 20; i++) {
       await createTestMurid({
         username: `murid ${i}`,
@@ -385,7 +377,7 @@ describe("get /api/v1/kehadiran-murid/", () => {
     const murid = getTestMurids.map((murid) => {
       return { ...murid, keterangan: "hadir" };
     });
-    // console.log(murid);
+
     const login = await supertest(web)
       .post("/api/v1/user/login")
       .send({ email: "guru@gmail.com", password: "123", role: "guru" });
@@ -401,17 +393,14 @@ describe("get /api/v1/kehadiran-murid/", () => {
         tanggal: jam.toISOString(),
         murid: murid,
       });
-    // console.log(j.status);
-    // console.log(typeof jadwal.id);
+
     const result = await supertest(web)
       .get(`/api/v1/${jadwal.id}/kehadiran-murid`)
       .set("Cookie", `token=${cookie.token}`)
       .query({
         tanggal: jam.toISOString(),
       });
-    // console.log(result.body.data.errors);
-    console.log(result.status);
-    console.log(result.body.data);
+
     expect(result.status).toBe(200);
     expect(result.body.message).toBe("SUCCESS");
   });
@@ -469,7 +458,7 @@ describe("get /api/v1/kehadiran-murid/", () => {
     });
 
     const jadwal = await getTestJadawl();
-    // console.log(jadwal);
+
     for (let i = 1; i < 20; i++) {
       await createTestMurid({
         username: `murid ${i}`,
@@ -482,7 +471,7 @@ describe("get /api/v1/kehadiran-murid/", () => {
     const murid = getTestMurids.map((murid) => {
       return { ...murid, keterangan: "hadir" };
     });
-    // console.log(murid);
+
     const login = await supertest(web)
       .post("/api/v1/user/login")
       .send({ email: "guru@gmail.com", password: "123", role: "guru" });
@@ -498,9 +487,7 @@ describe("get /api/v1/kehadiran-murid/", () => {
         tanggal: jam.toISOString(),
         murid: murid,
       });
-    // console.log(result.body.errors);
-    console.log(result.status);
-    console.log(result.body.errors);
+
     expect(result.status).toBe(400);
   });
 });

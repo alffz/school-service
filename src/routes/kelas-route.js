@@ -20,5 +20,9 @@ kelasRoute.get(
   kelasControlle.getById
 );
 kelasRoute.get("/api/v1/kelas", allowedRole(["admin"]), kelasControlle.get);
-
+kelasRoute.get(
+  "/api/v1/:id/murid",
+  allowedRole(["admin"]),
+  kelasControlle.getMuridAtClass
+);
 export default kelasRoute;

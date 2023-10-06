@@ -79,8 +79,8 @@ model Jadwal {
   id_guru      Int
   id_kelas     Int
   hari         Int // 0-6
-  mulai        Json // {hour:0,minute:0}
-  berakhir     Json // {hour:24,minute:59}
+  mulai        Json // {jam:0,menit:0}
+  berakhir     Json // {jam:24,menit:59}
   status       Boolean @default(false) // false sedang berlangsung
 
   pelajaran Pelajaran @relation(fields: [id_pelajaran], references: [id])

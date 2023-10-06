@@ -32,8 +32,7 @@ describe("POST /api/v1/guru/", () => {
       .post("/api/v1/guru")
       .set("Cookie", `token=${cookie.token}`)
       .send({ username: "guru", email: "guru@gmail.com", password: "123" });
-    console.log(result.body.errors);
-    console.log(result.body.data);
+
     expect(result.status).toBe(200);
     expect(result.body.message).toBe("SUCCESS");
 
@@ -161,8 +160,7 @@ describe("PATCH /api/v1/guru/:id", () => {
         password: "321",
         id_kelas: kelas.id,
       });
-    console.log(result.status);
-    console.log(result.body.errors);
+
     expect(result.status).toBe(200);
     expect(result.body.message).toBe("SUCCESS");
 
@@ -212,8 +210,7 @@ describe("PATCH /api/v1/guru/:id", () => {
         password: "321",
         id_kelas: kelas.id,
       });
-    console.log(result.status);
-    console.log(result.body.errors);
+
     expect(result.status).toBe(200);
     expect(result.body.message).toBe("SUCCESS");
 
@@ -260,8 +257,7 @@ describe("PATCH /api/v1/guru/:id", () => {
         email: "foo@gmail.com",
         password: "321",
       });
-    console.log(result.status);
-    console.log(result.body.errors);
+
     expect(result.status).toBe(200);
     expect(result.body.message).toBe("SUCCESS");
 
@@ -309,8 +305,7 @@ describe("PATCH /api/v1/guru/:id", () => {
         password: "321",
         id_kelas: 1,
       });
-    console.log(result.status);
-    console.log(result.body.errors);
+
     expect(result.status).toBe(409);
 
     await deleteUser({ email: "guru@gmail.com", role: "guru" });
@@ -340,8 +335,7 @@ describe("PATCH /api/v1/guru/:id", () => {
         password: "321",
         id_kelas: 1,
       });
-    console.log(result.status);
-    console.log(result.body.errors);
+
     expect(result.status).toBe(404);
 
     await deleteUser({ email: "admin@gmail.com", role: "admin" });
@@ -379,8 +373,7 @@ describe("PATCH /api/v1/guru/:id", () => {
         password: "",
         // id_kelas: 1,
       });
-    console.log(result.status);
-    console.log(result.body.errors);
+
     expect(result.status).toBe(400);
 
     await deleteUser({ email: "guru@gmail.com", role: "guru" });
@@ -419,8 +412,7 @@ describe("PATCH /api/v1/guru/:id", () => {
         password: "",
         // id_kelas: 1,
       });
-    console.log(result.status);
-    console.log(result.body.errors);
+
     expect(result.status).toBe(400);
 
     await deleteUser({ email: "guru@gmail.com", role: "guru" });
@@ -459,8 +451,7 @@ describe("PATCH /api/v1/guru/:id", () => {
         password: "213",
         // id_kelas: 1,
       });
-    console.log(result.status);
-    console.log(result.body.errors);
+
     expect(result.status).toBe(400);
 
     await deleteUser({ email: "guru@gmail.com", role: "guru" });
@@ -500,8 +491,7 @@ describe("PATCH /api/v1/guru/:id", () => {
         password: "321",
         // id_kelas: kelas.id,
       });
-    console.log(result.status);
-    console.log(result.body.errors);
+
     expect(result.status).toBe(200);
     expect(result.body.message).toBe("SUCCESS");
 
@@ -543,8 +533,7 @@ describe("PATCH /api/v1/guru/:id", () => {
         password: "321",
         // id_kelas: kelas.id,
       });
-    console.log(result.status);
-    console.log(result.body.errors);
+
     expect(result.status).toBe(200);
     expect(result.body.message).toBe("SUCCESS");
 
@@ -578,8 +567,7 @@ describe("PATCH /api/v1/guru/:id", () => {
         password: "321",
         id_kelas: 1,
       });
-    console.log(result.status);
-    console.log(result.body.errors);
+
     expect(result.status).toBe(400);
 
     await deleteUser({ email: "guru@gmail.com", role: "guru" });
@@ -700,12 +688,11 @@ describe("GET /api/v1/guru/:id", () => {
       .send({ email: "admin@gmail.com", password: "123", role: "admin" });
 
     const cookie = cookies(login.header["set-cookie"]);
-    console.log(cookie.token);
+
     const result = await supertest(web)
       .get("/api/v1/guru/" + id)
       .set("Cookie", `token=${cookie.token}`);
-    console.log(result.body.errors);
-    console.log(result.body.data);
+
     expect(result.status).toBe(200);
     expect(result.body.message).toBe("SUCCESS");
 
@@ -749,12 +736,11 @@ describe("GET /api/v1/guru/:id", () => {
       .send({ email: "guru@gmail.com", password: "123", role: "guru" });
 
     const cookie = cookies(login.header["set-cookie"]);
-    console.log(cookie.token);
+
     const result = await supertest(web)
       .get("/api/v1/guru/" + id)
       .set("Cookie", `token=${cookie.token}`);
-    console.log(result.body.errors);
-    console.log(result.body.data);
+
     expect(result.status).toBe(200);
     expect(result.body.message).toBe("SUCCESS");
 
@@ -838,8 +824,6 @@ describe("GET /api/v1/guru", () => {
       .set("Cookie", `token=${cookie.token}`)
       .query({ page: 4, perPage: 5 });
 
-    console.log(result.body.errors);
-    console.log(result.body.data);
     expect(result.status).toBe(200);
     expect(result.body.message).toBe("SUCCESS");
     expect(result.body.data.page.perPage).toBe(5);
@@ -879,8 +863,6 @@ describe("GET /api/v1/guru", () => {
       .set("Cookie", `token=${cookie.token}`)
       .query({ page: 4, perPage: 5 });
 
-    console.log(result.body.errors);
-    console.log(result.body.data);
     expect(result.status).toBe(200);
     expect(result.body.message).toBe("SUCCESS");
     expect(result.body.data.page.perPage).toBe(5);
@@ -930,8 +912,6 @@ describe("GET /api/v1/guru", () => {
       .set("Cookie", `token=${cookie.token}`)
       .query({ page: 1, perPage: 5 });
 
-    console.log(result.body.errors);
-    console.log(result.body.data);
     expect(result.status).toBe(200);
     expect(result.body.message).toBe("SUCCESS");
     expect(result.body.data.page.perPage).toBe(5);
@@ -982,8 +962,6 @@ describe("GET /api/v1/guru", () => {
       .get("/api/v1/guru")
       .set("Cookie", `token=${cookie.token}`);
 
-    console.log(result.body.errors);
-    console.log(result.body.data);
     expect(result.status).toBe(200);
     expect(result.body.message).toBe("SUCCESS");
     expect(result.body.data.page.perPage).toBe(20);

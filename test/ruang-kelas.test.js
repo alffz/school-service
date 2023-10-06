@@ -150,7 +150,7 @@ describe("PUT /api/v1/ruang-kelas/:id", () => {
       kapasitas: 30,
       tersedia: true,
     });
-    const { id_ruang_kelas } = await getTestRuangKelas();
+    const { id } = await getTestRuangKelas();
 
     const login = await supertest(web)
       .post("/api/v1/user/login")
@@ -159,7 +159,7 @@ describe("PUT /api/v1/ruang-kelas/:id", () => {
     const cookie = cookies(login.header["set-cookie"]);
 
     const result = await supertest(web)
-      .put("/api/v1/ruang-kelas/" + id_ruang_kelas)
+      .put("/api/v1/ruang-kelas/" + id)
       .set("Cookie", `token=${cookie.token}`)
       .send({ nomor_ruangan: 1, kapasitas: 30, tersedia: true });
 
@@ -187,7 +187,7 @@ describe("PUT /api/v1/ruang-kelas/:id", () => {
       kapasitas: 30,
       tersedia: true,
     });
-    const { id_ruang_kelas } = await getTestRuangKelas();
+    const { id } = await getTestRuangKelas();
 
     const login = await supertest(web)
       .post("/api/v1/user/login")
@@ -196,7 +196,7 @@ describe("PUT /api/v1/ruang-kelas/:id", () => {
     const cookie = cookies(login.header["set-cookie"]);
 
     const result = await supertest(web)
-      .put("/api/v1/ruang-kelas/" + id_ruang_kelas)
+      .put("/api/v1/ruang-kelas/" + id)
       .set("Cookie", `token=${cookie.token}`)
       .send({ nomor_ruangan: 2, kapasitas: 30, tersedia: true });
 
@@ -218,7 +218,7 @@ describe("PUT /api/v1/ruang-kelas/:id", () => {
       kapasitas: 30,
       tersedia: true,
     });
-    const { id_ruang_kelas } = await getTestRuangKelas();
+    const { id } = await getTestRuangKelas();
 
     const login = await supertest(web)
       .post("/api/v1/user/login")
@@ -227,7 +227,7 @@ describe("PUT /api/v1/ruang-kelas/:id", () => {
     const cookie = cookies(login.header["set-cookie"]);
 
     const result = await supertest(web)
-      .put("/api/v1/ruang-kelas/" + id_ruang_kelas)
+      .put("/api/v1/ruang-kelas/" + id)
       .set("Cookie", `token=${cookie.token}`)
       .send({ nomor_ruangan: "not number", kapasitas: 30, tersedia: true });
 
@@ -249,7 +249,7 @@ describe("PUT /api/v1/ruang-kelas/:id", () => {
       kapasitas: 30,
       tersedia: true,
     });
-    const { id_ruang_kelas } = await getTestRuangKelas();
+    const { id } = await getTestRuangKelas();
 
     const login = await supertest(web)
       .post("/api/v1/user/login")
@@ -258,7 +258,7 @@ describe("PUT /api/v1/ruang-kelas/:id", () => {
     const cookie = cookies(login.header["set-cookie"]);
 
     const result = await supertest(web)
-      .put("/api/v1/ruang-kelas/" + id_ruang_kelas)
+      .put("/api/v1/ruang-kelas/" + id)
       .set("Cookie", `token=${cookie.token}`)
       .send({ nomor_ruangan: 1, kapasitas: 30, tersedia: 1 });
 
@@ -280,7 +280,7 @@ describe("PUT /api/v1/ruang-kelas/:id", () => {
       kapasitas: 30,
       tersedia: true,
     });
-    const { id_ruang_kelas } = await getTestRuangKelas();
+    const { id } = await getTestRuangKelas();
 
     const login = await supertest(web)
       .post("/api/v1/user/login")
@@ -289,7 +289,7 @@ describe("PUT /api/v1/ruang-kelas/:id", () => {
     const cookie = cookies(login.header["set-cookie"]);
 
     const result = await supertest(web)
-      .put("/api/v1/ruang-kelas/" + id_ruang_kelas)
+      .put("/api/v1/ruang-kelas/" + id)
       .set("Cookie", `token=${cookie.token}`)
       .send({ nomor_ruangan: "", kapasitas: "", tersedia: "" });
 
@@ -313,7 +313,7 @@ describe("DELETE /api/v1/ruang-kelas/:id", () => {
       kapasitas: 30,
       tersedia: true,
     });
-    const { id_ruang_kelas } = await getTestRuangKelas();
+    const { id } = await getTestRuangKelas();
 
     const login = await supertest(web)
       .post("/api/v1/user/login")
@@ -322,7 +322,7 @@ describe("DELETE /api/v1/ruang-kelas/:id", () => {
     const cookie = cookies(login.header["set-cookie"]);
 
     const result = await supertest(web)
-      .delete("/api/v1/ruang-kelas/" + id_ruang_kelas)
+      .delete("/api/v1/ruang-kelas/" + id)
       .set("Cookie", `token=${cookie.token}`);
 
     expect(result.status).toBe(200);
@@ -391,7 +391,7 @@ describe("GET /api/v1/ruang-kelas/:id", () => {
       kapasitas: 30,
       tersedia: true,
     });
-    const { id_ruang_kelas } = await getTestRuangKelas();
+    const { id } = await getTestRuangKelas();
 
     const login = await supertest(web)
       .post("/api/v1/user/login")
@@ -400,11 +400,11 @@ describe("GET /api/v1/ruang-kelas/:id", () => {
     const cookie = cookies(login.header["set-cookie"]);
 
     const result = await supertest(web)
-      .get("/api/v1/ruang-kelas/" + id_ruang_kelas)
+      .get("/api/v1/ruang-kelas/" + id)
       .set("Cookie", `token=${cookie.token}`);
 
     expect(result.status).toBe(200);
-    expect(result.body.data.id_ruang_kelas).toBeDefined();
+    expect(result.body.data.id).toBeDefined();
     expect(result.body.data.nomor_ruangan).toBeDefined();
     expect(result.body.data.kapasitas).toBeDefined();
     expect(result.body.data.tersedia).toBeDefined();
