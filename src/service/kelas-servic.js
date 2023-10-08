@@ -39,6 +39,16 @@ const update = async (id, request) => {
 
   request = validate(createKelasSchema, request);
 
+  const ruangKelas = await prismaClient.ruang_kelas.findFirst({
+    where: {
+      nomor_ruangan: request.nomor_ruang_kelas,
+    },
+  });
+
+  if (!ruangKelas) {
+    throw new ResponseError(404, ["data ruang kelas tidak ditemukan"]);
+  }
+
   // handle data yang unique
   // 1. if unique field not change
   if (kelas.kelas === request.kelas) {

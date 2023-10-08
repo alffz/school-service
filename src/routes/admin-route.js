@@ -16,4 +16,5 @@ adminRoute.delete(
   adminControlle.remove
 );
 adminRoute.get("/api/v1/admin", allowedRole(["admin"]), adminControlle.get);
+
 export default adminRoute;

@@ -31,4 +31,10 @@ ruangKelas.get(
   ruangKelasController.get
 );
 
+ruangKelas.get(
+  "/api/v1/ruang-kelas/noPagging/true",
+  allowedRole(["admin"]),
+  ruangKelasController.getByNomor
+);
+
 export default ruangKelas;

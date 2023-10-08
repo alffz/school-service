@@ -144,4 +144,14 @@ const get = async ({ page, perPage, sort, kapasitas }) => {
   };
 };
 
-export default { create, update, remove, getById, get };
+const getByNomor = async () => {
+  const data = await prismaClient.ruang_kelas.findMany({
+    select: {
+      nomor_ruangan: true,
+    },
+  });
+
+  return data;
+};
+
+export default { create, update, remove, getById, get, getByNomor };

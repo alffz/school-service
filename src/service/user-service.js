@@ -11,6 +11,8 @@ import jwt from "jsonwebtoken";
 dotenv.config();
 
 const secretKey = process.env.SECRET_KEY;
+const tokenExpired = 60 * 60 * 24; // 15 menit
+const refreshTokenExpired = 60 * 60 * 24; // 24 jam
 
 const login = async (request) => {
   request = validate(loginSchema, request);
@@ -46,8 +48,10 @@ const login = async (request) => {
     role: request.role,
   };
 
-  const token = jwt.sign(tokenPayload, secretKey, { expiresIn: 10 });
-  const refreshToken = jwt.sign(tokenPayload, secretKey, { expiresIn: 20 });
+  const token = jwt.sign(tokenPayload, secretKey, { expiresIn: tokenExpired });
+  const refreshToken = jwt.sign(tokenPayload, secretKey, {
+    expiresIn: refreshTokenExpired,
+  });
 
   return { token, refreshToken };
 };
@@ -65,9 +69,11 @@ const refreshToken = async (refreshToken) => {
       role: user.role,
     };
 
-    const token = jwt.sign(tokenPayload, secretKey, { expiresIn: 10 });
+    const token = jwt.sign(tokenPayload, secretKey, {
+      expiresIn: tokenExpired,
+    });
     const newRefreshToken = jwt.sign(tokenPayload, secretKey, {
-      expiresIn: 20,
+      expiresIn: refreshTokenExpired,
     });
 
     return { token, newRefreshToken };

@@ -11,11 +11,17 @@ import pelajaranRoute from "../routes/pelajaran-route.js";
 import muridRoute from "../routes/murid-route.js";
 import jadwalRoute from "../routes/jadwal-route.js";
 import kehadiranMuridDanGuruRoute from "../routes/kehadiran-murid-dan-guru-route.js";
+import cors from "cors";
 
 const web = express();
 web.use(cookieParser());
 web.use(express.json());
-
+web.use(
+  cors({
+    origin: "http://localhost:3001", // allow for this url
+    credentials: true, //to set cookie in localstorage , but postman didn need it
+  })
+);
 web.use(publicRoute);
 
 web.use(authMiddleware);

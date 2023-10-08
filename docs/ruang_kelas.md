@@ -181,3 +181,42 @@ Response Body Error
   "errors": ["Ruang kelas tidak ditemukan"]
 }
 ```
+
+## GET ruang kelas by nomor ruangan
+
+Endpoint : GET /api/v1/ruang-kelas/nomor/:nomor_ruangan
+
+Header :
+
+    - Authorization : token
+    - role : ADMIN
+
+Request params
+
+- kapasitas : optional int
+
+Response Body Success
+
+```json
+{
+  "message": "SUCCESS",
+  "data": [
+    {
+      "id": 1,
+      "nomor_ruangan": 1
+    },
+    {
+      "id": 2,
+      "nomor_ruangan": 10
+    }
+  ]
+}
+```
+
+Response Body Error
+
+```json
+{
+  "errors": ["Ruang kelas tidak ditemukan"]
+}
+```

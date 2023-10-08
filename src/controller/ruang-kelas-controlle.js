@@ -59,4 +59,14 @@ const get = async (req, res, next) => {
   }
 };
 
-export default { create, update, remove, getById, get };
+const getByNomor = async (req, res, next) => {
+  try {
+    const result = await ruangKelasServic.getByNomor();
+    console.log(result);
+    res.status(200).json({ message: "SUCCESS", data: result }).end();
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { create, update, remove, getById, get, getByNomor };

@@ -37,7 +37,7 @@ Response Body Error
 
 ## Update
 
-Endpoint : PATCH /api/v1/pelajaran/:id
+Endpoint : PUT /api/v1/pelajaran/:id
 
 Header :
 
