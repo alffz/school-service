@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "jest",
-    "start": "nodemon src/main.js"
+    "start": "nodemon src/main.js",
+    "vercel-build":"echo hello",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.0.0",
