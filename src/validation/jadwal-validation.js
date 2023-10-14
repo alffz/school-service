@@ -6,12 +6,12 @@ export const createSchema = joi.object({
   id_kelas: joi.number().positive().required(),
   hari: joi.number().min(0).max(6).required(),
   mulai: joi.object({
-    jam: joi.number().min(0).max(24),
-    menit: joi.number().min(0).max(59),
+    jam: joi.number().required().min(0).max(24),
+    menit: joi.number().required().min(0).max(59),
   }),
   berakhir: joi.object({
-    jam: joi.number().min(0).max(24),
-    menit: joi.number().min(0).max(59),
+    jam: joi.number().required().min(0).max(24),
+    menit: joi.number().required().min(0).max(59),
   }),
   status: joi.valid(true, false),
 });

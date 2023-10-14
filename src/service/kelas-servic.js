@@ -128,9 +128,10 @@ const get = async ({ page, perPage, kelas }) => {
   if (kelas) {
     // https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and-sorting#filtering
     kelas = validate(kelasSchema, kelas);
-    console.log(kelas);
     query.where = {
-      kelas: kelas,
+      kelas: {
+        contains: kelas,
+      },
     };
   }
 

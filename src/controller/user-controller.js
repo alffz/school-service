@@ -2,13 +2,13 @@ import userService from "../service/user-service.js";
 
 const login = async (req, res, next) => {
   try {
-    const { token, refreshToken } = await userService.login(req.body);
+    const { token, refreshToken, role } = await userService.login(req.body);
 
     res
       .status(200)
       .cookie("token", token)
       .cookie("refreshToken", refreshToken)
-      .json({ message: "SUCCESS" })
+      .json({ message: "SUCCESS", role: role })
       .end();
   } catch (err) {
     next(err);
@@ -16,7 +16,7 @@ const login = async (req, res, next) => {
 };
 const refreshToken = async (req, res, next) => {
   try {
-    const { token, newRefreshToken } = await userService.refreshToken(
+    const { token, newRefreshToken, role } = await userService.refreshToken(
       req.cookies.refreshToken
     );
     // console.log(token, newRefreshToken);
@@ -24,7 +24,7 @@ const refreshToken = async (req, res, next) => {
       .status(200)
       .cookie("token", token)
       .cookie("refreshToken", newRefreshToken)
-      .json({ message: "SUCCESS" })
+      .json({ message: "SUCCESS", role: role })
       .end();
   } catch (err) {
     next(err);

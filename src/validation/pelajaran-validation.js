@@ -7,3 +7,4 @@ export const createSchema = joi.object({
 export const idSchema = joi.number().positive().required();
 export const pageSchema = joi.number().positive().required();
 export const perPageSchema = joi.number().positive().required();
+export const pelajaranSchema = joi.string().required();

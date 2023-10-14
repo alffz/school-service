@@ -54,4 +54,15 @@ const get = async (req, res, next) => {
   }
 };
 
-export default { create, update, remove, getById, get };
+const getByName = async (req, res, next) => {
+  try {
+    const pelajaran = req.params.pelajaran;
+
+    const result = await pelajaranServic.getByName(pelajaran);
+
+    res.status(200).json({ message: "SUCCESS", data: result }).end();
+  } catch (err) {
+    next(err);
+  }
+};
+export default { create, update, remove, getById, get, getByName };

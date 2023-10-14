@@ -165,7 +165,7 @@ Header :
 
 Request param
 
-- hari : optioanl default senin
+- hari : String optioanl default senin
 - page : optional default 1
 - perPage : optional default 20
 

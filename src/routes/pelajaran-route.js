@@ -28,5 +28,9 @@ pelajaranRoute.get(
   allowedRole(["admin"]),
   pelajaranController.get
 );
-
+pelajaranRoute.get(
+  "/api/v1/pelajaran/pelajaran/:pelajaran",
+  allowedRole(["admin"]),
+  pelajaranController.getByName
+);
 export default pelajaranRoute;

@@ -5,6 +5,7 @@ import {
   createSchema,
   idSchema,
   pageSchema,
+  pelajaranSchema,
   perPageSchema,
 } from "../validation/pelajaran-validation.js";
 
@@ -134,4 +135,17 @@ const get = async ({ page, perPage }) => {
   };
 };
 
-export default { create, update, remove, getById, get };
+const getByName = async (pelajaran) => {
+  pelajaran = validate(pelajaranSchema, pelajaran);
+
+  const result = await prismaClient.pelajaran.findMany({
+    where: {
+      pelajaran: {
+        contains: pelajaran,
+      },
+    },
+  });
+  return result;
+};
+
+export default { create, update, remove, getById, get, getByName };

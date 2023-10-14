@@ -53,7 +53,7 @@ const login = async (request) => {
     expiresIn: refreshTokenExpired,
   });
 
-  return { token, refreshToken };
+  return { token, refreshToken, role: request.role };
 };
 
 const refreshToken = async (refreshToken) => {
@@ -76,7 +76,7 @@ const refreshToken = async (refreshToken) => {
       expiresIn: refreshTokenExpired,
     });
 
-    return { token, newRefreshToken };
+    return { token, newRefreshToken, role: request.role };
   }
 };
 

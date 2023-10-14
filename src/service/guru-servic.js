@@ -151,7 +151,9 @@ const get = async ({ page, perPage, sort, username }) => {
     username = validate(userNameSchema, username);
 
     query.where = {
-      username: username,
+      username: {
+        contains: username,
+      },
     };
   }
 

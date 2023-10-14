@@ -18,7 +18,11 @@ web.use(cookieParser());
 web.use(express.json());
 web.use(
   cors({
-    origin: "http://localhost:3001", // allow for this url
+    origin: [
+      "http://localhost:3001",
+      "https://school-nx3gnczrg-alffzs-projects.vercel.app",
+      "https://school-web-git-main-alffzs-projects.vercel.app",
+    ], // allow for this url
     credentials: true, //to set cookie in localstorage , but postman didn need it
   })
 );
