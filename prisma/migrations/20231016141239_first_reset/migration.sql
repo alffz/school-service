@@ -2,13 +2,13 @@
 CREATE TYPE "Keterangan" AS ENUM ('absen', 'ijin', 'hadir');
 
 -- CreateTable
-CREATE TABLE "Admin" (
+CREATE TABLE "admin" (
     "id" SERIAL NOT NULL,
     "username" VARCHAR(50) NOT NULL,
     "email" VARCHAR(50) NOT NULL,
     "password" VARCHAR(100) NOT NULL,
 
-    CONSTRAINT "Admin_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "admin_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -31,14 +31,14 @@ CREATE TABLE "kelas" (
 );
 
 -- CreateTable
-CREATE TABLE "Guru" (
+CREATE TABLE "guru" (
     "id" SERIAL NOT NULL,
     "username" VARCHAR(50) NOT NULL,
     "email" VARCHAR(50) NOT NULL,
     "password" VARCHAR(100) NOT NULL,
     "id_kelas" INTEGER,
 
-    CONSTRAINT "Guru_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "guru_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -61,7 +61,7 @@ CREATE TABLE "murid" (
 );
 
 -- CreateTable
-CREATE TABLE "Jadwal" (
+CREATE TABLE "jadwal" (
     "id" SERIAL NOT NULL,
     "id_pelajaran" INTEGER NOT NULL,
     "id_guru" INTEGER NOT NULL,
@@ -71,38 +71,38 @@ CREATE TABLE "Jadwal" (
     "berakhir" JSONB NOT NULL,
     "status" BOOLEAN NOT NULL DEFAULT false,
 
-    CONSTRAINT "Jadwal_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "jadwal_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Kehadiran_murid" (
+CREATE TABLE "kehadiran_murid" (
     "id" SERIAL NOT NULL,
     "id_jadwal" INTEGER NOT NULL,
     "tanggal" TIMESTAMP(3) NOT NULL,
     "id_murid" INTEGER NOT NULL,
     "keterangan" "Keterangan" NOT NULL,
 
-    CONSTRAINT "Kehadiran_murid_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "kehadiran_murid_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Kehadiran_guru" (
+CREATE TABLE "kehadiran_guru" (
     "id" SERIAL NOT NULL,
     "id_jadwal" INTEGER NOT NULL,
     "id_guru" INTEGER NOT NULL,
     "tanggal" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Kehadiran_guru_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "kehadiran_guru_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Admin_email_key" ON "Admin"("email");
+CREATE UNIQUE INDEX "admin_email_key" ON "admin"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "ruang_kelas_nomor_ruangan_key" ON "ruang_kelas"("nomor_ruangan");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Guru_email_key" ON "Guru"("email");
+CREATE UNIQUE INDEX "guru_email_key" ON "guru"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "murid_email_key" ON "murid"("email");
@@ -111,25 +111,25 @@ CREATE UNIQUE INDEX "murid_email_key" ON "murid"("email");
 ALTER TABLE "kelas" ADD CONSTRAINT "kelas_nomor_ruang_kelas_fkey" FOREIGN KEY ("nomor_ruang_kelas") REFERENCES "ruang_kelas"("nomor_ruangan") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Guru" ADD CONSTRAINT "Guru_id_kelas_fkey" FOREIGN KEY ("id_kelas") REFERENCES "kelas"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "guru" ADD CONSTRAINT "guru_id_kelas_fkey" FOREIGN KEY ("id_kelas") REFERENCES "kelas"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "murid" ADD CONSTRAINT "murid_id_kelas_fkey" FOREIGN KEY ("id_kelas") REFERENCES "kelas"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Jadwal" ADD CONSTRAINT "Jadwal_id_pelajaran_fkey" FOREIGN KEY ("id_pelajaran") REFERENCES "pelajaran"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "jadwal" ADD CONSTRAINT "jadwal_id_pelajaran_fkey" FOREIGN KEY ("id_pelajaran") REFERENCES "pelajaran"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Jadwal" ADD CONSTRAINT "Jadwal_id_guru_fkey" FOREIGN KEY ("id_guru") REFERENCES "Guru"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "jadwal" ADD CONSTRAINT "jadwal_id_guru_fkey" FOREIGN KEY ("id_guru") REFERENCES "guru"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Jadwal" ADD CONSTRAINT "Jadwal_id_kelas_fkey" FOREIGN KEY ("id_kelas") REFERENCES "kelas"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "jadwal" ADD CONSTRAINT "jadwal_id_kelas_fkey" FOREIGN KEY ("id_kelas") REFERENCES "kelas"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Kehadiran_murid" ADD CONSTRAINT "Kehadiran_murid_id_jadwal_fkey" FOREIGN KEY ("id_jadwal") REFERENCES "Jadwal"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "kehadiran_murid" ADD CONSTRAINT "kehadiran_murid_id_jadwal_fkey" FOREIGN KEY ("id_jadwal") REFERENCES "jadwal"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Kehadiran_murid" ADD CONSTRAINT "Kehadiran_murid_id_murid_fkey" FOREIGN KEY ("id_murid") REFERENCES "murid"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "kehadiran_murid" ADD CONSTRAINT "kehadiran_murid_id_murid_fkey" FOREIGN KEY ("id_murid") REFERENCES "murid"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Kehadiran_guru" ADD CONSTRAINT "Kehadiran_guru_id_jadwal_fkey" FOREIGN KEY ("id_jadwal") REFERENCES "Jadwal"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "kehadiran_guru" ADD CONSTRAINT "kehadiran_guru_id_jadwal_fkey" FOREIGN KEY ("id_jadwal") REFERENCES "jadwal"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
