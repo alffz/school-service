@@ -109,14 +109,14 @@ describe("POST /api/v1/user/refreshToken", () => {
   it("should can refreshToken ", async () => {
     await createUser({
       username: "alfri",
-      email: "admin@gmail.com",
+      email: "murid@gmail.com",
       password: "123",
       role: "murid",
     });
 
     const login = await supertest(web)
       .post("/api/v1/user/login")
-      .send({ email: "admin@gmail.com", password: "123", role: "murid" });
+      .send({ email: "murid@gmail.com", password: "123", role: "murid" });
 
     const cookie = cookies(login.header["set-cookie"]);
 
@@ -131,7 +131,7 @@ describe("POST /api/v1/user/refreshToken", () => {
     expect(refreshTokenCookie.token).toBeDefined();
     expect(refreshTokenCookie.refreshToken).toBeDefined();
 
-    await deleteUser({ email: "admin@gmail.com", role: "murid" });
+    await deleteUser({ email: "murid@gmail.com", role: "murid" });
   });
 
   it("should reject refreshToken wrong  ", async () => {

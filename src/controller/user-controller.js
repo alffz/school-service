@@ -19,7 +19,7 @@ const refreshToken = async (req, res, next) => {
     const { token, newRefreshToken, role } = await userService.refreshToken(
       req.cookies.refreshToken
     );
-    // console.log(token, newRefreshToken);
+
     res
       .status(200)
       .cookie("token", token)

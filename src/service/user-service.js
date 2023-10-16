@@ -8,6 +8,7 @@ import { prismaClient } from "../app/database.js";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import { request } from "express";
 dotenv.config();
 
 const secretKey = process.env.SECRET_KEY;
@@ -76,7 +77,7 @@ const refreshToken = async (refreshToken) => {
       expiresIn: refreshTokenExpired,
     });
 
-    return { token, newRefreshToken, role: request.role };
+    return { token, newRefreshToken, role: user.role };
   }
 };
 
