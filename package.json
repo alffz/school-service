@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest",
     "start": "nodemon src/main.js",
-    "vercel-build":"npx prisma generate && npx prisma migrate dev"
+    "vercel-build":"npx prisma migrate dev"
   },
   "dependencies": {
     "@prisma/client": "^5.0.0",
