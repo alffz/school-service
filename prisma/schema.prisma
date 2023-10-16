@@ -15,6 +15,8 @@ model Admin {
   username String @db.VarChar(50)
   email    String @unique @db.VarChar(50)
   password String @db.VarChar(100)
+
+  @@map("admin")
 }
 
 model Ruang_kelas {
@@ -50,6 +52,8 @@ model Guru {
 
   kelas  Kelas?   @relation(fields: [id_kelas], references: [id])
   Jadwal Jadwal[]
+
+  @@map("guru")
 }
 
 model Pelajaran {
@@ -89,6 +93,8 @@ model Jadwal {
 
   Kehadiran_murid Kehadiran_murid[]
   Kehadiran_guru  Kehadiran_guru[]
+
+  @@map("jadwal")
 }
 
 model Kehadiran_murid {
@@ -100,6 +106,8 @@ model Kehadiran_murid {
 
   jadwal Jadwal @relation(fields: [id_jadwal], references: [id])
   murid  Murid  @relation(fields: [id_murid], references: [id])
+
+  @@map("kehadiran_murid")
 }
 
 model Kehadiran_guru {
@@ -109,6 +117,8 @@ model Kehadiran_guru {
   tanggal   DateTime
 
   jadwal Jadwal @relation(fields: [id_jadwal], references: [id])
+
+  @@map("kehadiran_guru")
 }
 
 enum Keterangan {
