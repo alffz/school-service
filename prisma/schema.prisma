@@ -121,6 +121,11 @@ model Kehadiran_guru {
   @@map("kehadiran_guru")
 }
 
+model Token {
+  id    Int    @id @default(autoincrement())
+  token String
+}
+
 enum Keterangan {
   absen
   ijin
