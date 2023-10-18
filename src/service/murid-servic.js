@@ -125,7 +125,11 @@ const getById = async ({ id }) => {
     throw new ResponseError(404, ["data murid tidak ditemukan"]);
   }
 
-  return data;
+  return {
+    username: data.username,
+    email: data.email,
+    kelas: data.kelas.kelas,
+  };
 };
 
 const get = async ({ page, perPage, username }) => {
