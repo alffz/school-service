@@ -32,7 +32,7 @@ const create = async (request) => {
     password: password,
   };
 
-  return prismaClient.guru.create({ data: user });
+  return prismaClient.guru.create({ data: user, select: { username: true } });
 };
 
 const update = async ({ id, request }) => {
@@ -77,6 +77,9 @@ const update = async ({ id, request }) => {
       id: id,
     },
     data: request,
+    select: {
+      username: true,
+    },
   });
 };
 

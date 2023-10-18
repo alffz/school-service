@@ -41,7 +41,7 @@ Response Body Error
 
 ## Update
 
-Endpoint : PATCH /api/v1/guru/:id
+Endpoint : PUT /api/v1/guru/:id
 
 Header :
 

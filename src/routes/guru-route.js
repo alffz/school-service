@@ -6,7 +6,7 @@ import { allowedFields } from "../middleware/allowedFields-middleware.js";
 const guruRoute = express.Router();
 
 guruRoute.post("/api/v1/guru", allowedRole(["admin"]), guruController.create);
-guruRoute.patch(
+guruRoute.put(
   "/api/v1/guru/:id",
   allowedRole(["admin", "guru"]),
   allowedFields({
