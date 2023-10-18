@@ -32,7 +32,7 @@ const create = async (request) => {
     id_kelas: request?.id_kelas,
   };
 
-  return prismaClient.murid.create({ data: user });
+  return prismaClient.murid.create({ data: user, select: { username: true } });
 };
 
 const update = async ({ id, request }) => {
@@ -58,6 +58,9 @@ const update = async ({ id, request }) => {
         id: id,
       },
       data: request,
+      select: {
+        username: true,
+      },
     });
   }
 
@@ -151,7 +154,9 @@ const get = async ({ page, perPage, username }) => {
     username = validate(userNameSchema, username);
 
     query.where = {
-      username: username,
+      username: {
+        contains: username,
+      },
     };
   }
 
