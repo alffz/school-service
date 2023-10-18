@@ -184,7 +184,7 @@ Response Body Error
 
 ## GET ruang kelas by nomor ruangan
 
-Endpoint : GET /api/v1/ruang-kelas/nomor/:nomor_ruangan
+Endpoint : GET /api/v1/ruang-kelas/nomor-ruangan/:nomorRuangan
 
 Header :
 
@@ -200,16 +200,10 @@ Response Body Success
 ```json
 {
   "message": "SUCCESS",
-  "data": [
-    {
-      "id": 1,
-      "nomor_ruangan": 1
-    },
-    {
-      "id": 2,
-      "nomor_ruangan": 10
-    }
-  ]
+  "data": {
+    "id": 1,
+    "nomor_ruangan": 1
+  }
 }
 ```
 
