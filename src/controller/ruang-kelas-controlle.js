@@ -61,8 +61,9 @@ const get = async (req, res, next) => {
 
 const getByNomor = async (req, res, next) => {
   try {
-    const result = await ruangKelasServic.getByNomor();
-    console.log(result);
+    const nomorRuangan = parseInt(req.params.nomorRuangan);
+    const result = await ruangKelasServic.getByNomor(nomorRuangan);
+
     res.status(200).json({ message: "SUCCESS", data: result }).end();
   } catch (err) {
     next(err);

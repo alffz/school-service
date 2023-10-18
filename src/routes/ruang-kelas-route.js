@@ -32,7 +32,7 @@ ruangKelas.get(
 );
 
 ruangKelas.get(
-  "/api/v1/ruang-kelas/noPagging/true",
+  "/api/v1/ruang-kelas/nomor-ruangan/:nomorRuangan",
   allowedRole(["admin"]),
   ruangKelasController.getByNomor
 );

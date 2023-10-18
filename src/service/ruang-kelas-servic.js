@@ -144,14 +144,18 @@ const get = async ({ page, perPage, sort, kapasitas }) => {
   };
 };
 
-const getByNomor = async () => {
-  const data = await prismaClient.ruang_kelas.findMany({
+const getByNomor = async (nomorRuangan) => {
+  const result = await prismaClient.ruang_kelas.findFirst({
+    where: {
+      nomor_ruangan: nomorRuangan,
+    },
     select: {
+      id: true,
       nomor_ruangan: true,
     },
   });
 
-  return data;
+  return result;
 };
 
 export default { create, update, remove, getById, get, getByNomor };
