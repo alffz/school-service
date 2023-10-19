@@ -1,7 +1,5 @@
 import express from "express";
 import { allowedRole } from "../middleware/allowedRole-middleware.js";
-import { allowedFields } from "../middleware/allowedFields-middleware.js";
-import { restrictAccessToOwnData } from "../middleware/allowedSelf-middleware.js";
 import jadwalController from "../controller/jadwal-controlle.js";
 
 const jadwalRoute = express.Router();
@@ -32,12 +30,12 @@ jadwalRoute.get(
   jadwalController.get
 );
 jadwalRoute.get(
-  "/api/v1/jadwal/guru/username",
+  "/api/v1/jadwal/guru/:username",
   allowedRole(["admin"]),
   jadwalController.getByGuru
 );
 jadwalRoute.get(
-  "/api/v1/jadwal/kelas/kelasName",
+  "/api/v1/jadwal/kelas/:kelas",
   allowedRole(["admin"]),
   jadwalController.getByKelas
 );

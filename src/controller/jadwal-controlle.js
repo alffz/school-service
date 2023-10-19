@@ -1,4 +1,3 @@
-import { prismaClient } from "../app/database.js";
 import jadwalServic from "../service/jadwal-servic.js";
 
 const create = async (req, res, next) => {
@@ -59,9 +58,9 @@ const get = async (req, res, next) => {
 
 const getByGuru = async (req, res, next) => {
   try {
-    const username = req.query.username;
+    const username = req.params.username;
 
-    const result = await jadwalServic.getByGuru({ username });
+    const result = await jadwalServic.getByGuru(username);
     res.status(200).json({ message: "SUCCESS", data: result }).end();
   } catch (err) {
     next(err);
@@ -70,9 +69,9 @@ const getByGuru = async (req, res, next) => {
 
 const getByKelas = async (req, res, next) => {
   try {
-    const kelas = req.query.kelas;
+    const kelas = req.params.kelas;
 
-    const result = await jadwalServic.getByKelas({ kelas });
+    const result = await jadwalServic.getByKelas(kelas);
     res.status(200).json({ message: "SUCCESS", data: result }).end();
   } catch (err) {
     next(err);

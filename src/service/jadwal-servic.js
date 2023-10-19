@@ -182,7 +182,7 @@ const get = async ({ page, perPage, hari }) => {
   };
 };
 
-const getByGuru = async ({ username }) => {
+const getByGuru = async (username) => {
   username = validate(userNameSchema, username);
 
   const data = await prismaClient.jadwal.findMany({
@@ -193,11 +193,6 @@ const getByGuru = async ({ username }) => {
     },
     select: {
       id: true,
-      guru: {
-        select: {
-          username: true,
-        },
-      },
       kelas: {
         select: {
           kelas: true,
@@ -230,7 +225,6 @@ const getByGuru = async ({ username }) => {
       .map((item) => {
         return {
           id: item.id,
-          guru: item.guru.username,
           kelas: item.kelas.kelas,
           pelajaran: item.pelajaran.pelajaran,
           hari: item.hari,
@@ -249,7 +243,7 @@ const getByGuru = async ({ username }) => {
   };
 };
 
-const getByKelas = async ({ kelas }) => {
+const getByKelas = async (kelas) => {
   kelas = validate(kelasSchema, kelas);
 
   const data = await prismaClient.jadwal.findMany({
@@ -307,12 +301,5 @@ const getByKelas = async ({ kelas }) => {
     },
   };
 };
+
 export default { create, update, remove, getById, get, getByGuru, getByKelas };
-
-const createJadwal = async () => {
-  const result = await prismaClient.$queryRaw`select * from jadwal`;
-  console.log(result);
-  // return;
-};
-
-// create();

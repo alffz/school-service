@@ -172,7 +172,6 @@ Request param
 ```json
 {
   "message": "SUCCESS",
-  "hari": "senin",
   "data": [
     {
       "id": 1,
@@ -320,7 +319,7 @@ Response Body Error
 
 ## GET by kelas
 
-Endpoint : GET /api/v1/jadwal/kelas?klas=XII
+Endpoint : GET /api/v1/jadwal/kelas/:kelas
 
 Header :
 

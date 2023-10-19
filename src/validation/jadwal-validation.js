@@ -18,7 +18,7 @@ export const createSchema = joi.object({
 
 export const idSchema = joi.number().positive().required();
 export const hariSchema = joi.string().required();
-export const userNameSchema = joi.string();
+export const userNameSchema = joi.string().required();
 export const kelasSchema = joi.string();
 export const statusSchema = joi.valid("true", "false");
 export const pageSchema = joi.number().positive();
