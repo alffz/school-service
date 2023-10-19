@@ -220,7 +220,7 @@ Response Body Error
 
 ## GET by guru name
 
-Endpoint : GET /api/v1/jadwal/guru?username=alfri&status=true
+Endpoint : GET /api/v1/jadwal/guru/:username
 
 Header :
 
