@@ -39,7 +39,7 @@ Response Body Error
 
 ## Update
 
-Endpoint : PATCH /api/v1/kelas/:id
+Endpoint : PUT /api/v1/kelas/:id
 
 Header :
 
@@ -114,8 +114,8 @@ Response Body Success
 {
   "message": "SUCCESS",
   "data": {
-    "kelas": "Kelas XII B",
-    "nomor_ruangan": 1
+    "nomor_ruangan": 1,
+    "kelas": "Kelas XII B"
   }
 }
 ```
@@ -178,7 +178,7 @@ Response Body Error
 }
 ```
 
-## GET murid pada sebuah kelas
+## GET murid pada sebuah kelasm
 
 Endpoint : GET /api/v1/:id/murid
 

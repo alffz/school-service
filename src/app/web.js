@@ -10,7 +10,7 @@ import guruRoute from "../routes/guru-route.js";
 import pelajaranRoute from "../routes/pelajaran-route.js";
 import muridRoute from "../routes/murid-route.js";
 import jadwalRoute from "../routes/jadwal-route.js";
-import kehadiranMuridDanGuruRoute from "../routes/kehadiran-murid-dan-guru-route.js";
+import kehadiran from "../routes/kehadiran-route.js";
 import cors from "cors";
 
 const web = express();
@@ -33,7 +33,7 @@ web.use(guruRoute);
 web.use(pelajaranRoute);
 web.use(muridRoute);
 web.use(jadwalRoute);
-web.use(kehadiranMuridDanGuruRoute);
+web.use(kehadiran);
 
 web.use(errorMiddleware);
 

@@ -20,7 +20,6 @@ Request Body
 {
   "id_jadwal": 1,
   "id_guru": 1,
-  "tanggal": "2023-09-19 09:0:56",
   "murid": [
     { "id": 1, "keterangan": "hadir" },
     { "id": 2, "keterangan": "hadir" },
@@ -46,9 +45,9 @@ Response Body Error
 }
 ```
 
-## Get kehadiran murid by tanggal
+## Get kehadiran murid by jadwal &tanggal
 
-Endpoint : GET /api/v1/:id_jadwal/kehadiran-murid?tanggal=2023-09-23
+Endpoint : GET /api/v1/kehadiran/murid?id_jadwal=1&tanggal=2023-09-23
 
 Header :
 

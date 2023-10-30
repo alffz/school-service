@@ -117,8 +117,6 @@ const getById = async (id) => {
 const get = async ({ page, perPage, kelas }) => {
   page = validate(idSchema, page);
   perPage = validate(idSchema, perPage);
-  console.log(typeof page, typeof perPage);
-  console.log(page, perPage);
 
   const query = {
     take: perPage,
